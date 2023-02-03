@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3800417164837433539}
   - component: {fileID: 7987344063511343331}
+  - component: {fileID: 8333016810390632771}
   m_Layer: 0
   m_Name: TrainSpawner
   m_TagString: Untagged
@@ -84,3 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8333016810390632771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702171095114312584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b14f4bd25111b4d903dcb46b98ea7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  train: {fileID: 0}
+  timer: 0
