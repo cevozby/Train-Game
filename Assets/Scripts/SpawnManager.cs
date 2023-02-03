@@ -12,6 +12,8 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] string parentObjectName;
 
+    [SerializeField] List<Color> trainColors;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +40,8 @@ public class SpawnManager : MonoBehaviour
         if (isReady)
         {
             isReady = false;
-            Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform);
+            Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform).
+                GetComponent<SpriteRenderer>().color = trainColors[Random.Range(0, trainColors.Count)];
             StartCoroutine(Cooldown());
         }
     }
