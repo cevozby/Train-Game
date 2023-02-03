@@ -8,7 +8,7 @@ public class SpawnManager : MonoBehaviour
 
     bool isReady = true;
 
-    [SerializeField] float timer;
+    [SerializeField] float cooldownTimer, spawnTimer;
 
     [SerializeField] string parentObjectName;
 
@@ -22,7 +22,15 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SpawnTrain();
+        SpawnControl();
+    }
+
+    void SpawnControl()
+    {
+        spawnTimer -= Time.deltaTime;
+
+        if (spawnTimer > 0f) SpawnTrain();
+        else Destroy(this);
     }
 
     void SpawnTrain()
@@ -37,7 +45,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator Cooldown()
     {
-        yield return new WaitForSeconds(timer);
+        yield return new WaitForSeconds(cooldownTimer);
         isReady = true;
     }
 
