@@ -16,18 +16,29 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         new GameObject(parentObjectName);
-        SpawnTrain();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        SpawnTrain();
     }
 
     void SpawnTrain()
     {
-        Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform);
+        if (isReady)
+        {
+            isReady = false;
+            Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform);
+            StartCoroutine(Cooldown());
+        }
+    }
+
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(timer);
+        isReady = true;
     }
 
 }
