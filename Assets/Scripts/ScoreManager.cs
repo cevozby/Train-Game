@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static int matchNumber, correctNumber;
+    public static int totalMatch, currentScore;
 
     // Start is called before the first frame update
     void Start()

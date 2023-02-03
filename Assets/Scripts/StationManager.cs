@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class StationManager : MonoBehaviour
 {
+    MatchManager matchManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
     }
 
     // Update is called once per frame
@@ -15,4 +16,19 @@ public class StationManager : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Train"))
+        {
+            Color trainColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
+            Color stationColor = this.gameObject.GetComponent<SpriteRenderer>().color;
+            Destroy(collision.gameObject);
+            ScoreManager.totalMatch++;
+            matchManager.MatchObjects(trainColor, stationColor);
+            Debug.Log("Train color: " + trainColor + " Station color: " + stationColor + " Current score: " + ScoreManager.currentScore
+                + " Max score: " + ScoreManager.totalMatch);
+        }
+    }
+
 }

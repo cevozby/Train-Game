@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class MatchManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void MatchObjects(Color trainColor, Color stationColor)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (trainColor == stationColor) ScoreManager.currentScore++;
+        else return;
     }
 }
