@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Train
   - Railroad
+  - SwitchRoad
   layers:
   - Default
   - TransparentFX
