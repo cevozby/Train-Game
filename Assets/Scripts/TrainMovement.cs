@@ -4,15 +4,53 @@ using UnityEngine;
 
 public class TrainMovement : MonoBehaviour
 {
+    Rigidbody2D trainRB;
+
+    [SerializeField] Transform startPoint;
+    public List<Transform> points;
+    [SerializeField] float speed;
+    int index;
+
+    public bool isStart;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        isStart = false;
+        index = 0;
+        trainRB = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if(points.Count == 0)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, startPoint.position, speed);
+            if (Vector2.Distance(transform.position, startPoint.position) <= 0.05f) isStart = true;
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, points[index].position, speed);
+            if (Vector2.Distance(transform.position, points[index].position) <= 0.05f)
+            {
+                if (index < points.Count - 1) index++;
+                else return;
+            }
+        }
+        //trainRB.MovePosition(Vector2.Lerp(transform.position, point.position, speed + Time.deltaTime));
+        //trainRB.AddForceAtPosition(Vector2.one * speed, point.position);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Railroad"))
+        {
+            for(int i = 0; i < collision.gameObject.transform.childCount; i++)
+            {
+                points.Add(collision.gameObject.transform.GetChild(i));
+            }
+        }
+    }
+
 }
