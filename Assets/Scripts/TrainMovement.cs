@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorManager : MonoBehaviour
+public class TrainMovement : MonoBehaviour
 {
-    List<Color> colors = new List<Color> { Color.red, Color.green, Color.blue, Color.yellow, Color.grey, Color.magenta };
     // Start is called before the first frame update
     void Start()
     {
