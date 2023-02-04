@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Colors { Red, Orange, Yellow, Green, Blue, Purple}
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject train;
@@ -14,11 +15,12 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] List<Color> trainColors;
 
+    Colors colors;
+
     // Start is called before the first frame update
     void Start()
     {
         new GameObject(parentObjectName);
-        
     }
 
     // Update is called once per frame
