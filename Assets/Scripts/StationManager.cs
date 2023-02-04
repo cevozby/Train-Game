@@ -26,8 +26,6 @@ public class StationManager : MonoBehaviour
             Destroy(collision.gameObject);
             ScoreManager.totalMatch++;
             matchManager.MatchObjects(trainColor, stationColor);
-            Debug.Log("Train color: " + trainColor + " Station color: " + stationColor + " Current score: " + ScoreManager.currentScore
-                + " Max score: " + ScoreManager.totalMatch);
         }
     }
 
