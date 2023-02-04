@@ -17,10 +17,13 @@ public class SpawnManager : MonoBehaviour
 
     Colors colors;
 
+    ColorManager colorManager;
+
     // Start is called before the first frame update
     void Start()
     {
         new GameObject(parentObjectName);
+        colorManager = GameObject.Find("ColorManager").GetComponent<ColorManager>();
     }
 
     // Update is called once per frame
@@ -31,10 +34,10 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnControl()
     {
-        spawnTimer -= Time.deltaTime;
-
+        
         if (spawnTimer > 0f) SpawnTrain();
         else Destroy(this);
+        spawnTimer -= Time.deltaTime;
     }
 
     void SpawnTrain()
@@ -43,7 +46,8 @@ public class SpawnManager : MonoBehaviour
         {
             isReady = false;
             Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform).
-                GetComponent<SpriteRenderer>().color = trainColors[Random.Range(0, trainColors.Count)];
+                GetComponent<SpriteRenderer>().color = colorManager.ChangeTrainColor();
+            //colorManager.ChangeTrainColor(train.GetComponent<SpriteRenderer>());
             StartCoroutine(Cooldown());
         }
     }

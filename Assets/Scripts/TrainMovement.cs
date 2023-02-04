@@ -8,7 +8,7 @@ public class TrainMovement : MonoBehaviour
 
     [SerializeField] Transform startPoint;
     public List<Transform> points;
-    [SerializeField] float speed;
+    [SerializeField] float speed, rotateSpeed, rotationModifier;
     int index;
 
     public bool isStart;
@@ -32,6 +32,14 @@ public class TrainMovement : MonoBehaviour
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, points[index].position, speed);
+
+            //Vector3 vectorToTarget = points[index].position - transform.position;
+            //float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - rotationModifier;
+            //Quaternion toRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotateSpeed);
+            //Quaternion toRotation = Quaternion.LookRotation(transform.forward, points[index].position);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, toRotation,  Time.deltaTime);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotateSpeed);
             if (Vector2.Distance(transform.position, points[index].position) <= 0.05f)
             {
                 if (index < points.Count - 1) index++;
@@ -42,10 +50,13 @@ public class TrainMovement : MonoBehaviour
         //trainRB.AddForceAtPosition(Vector2.one * speed, point.position);
     }
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Railroad"))
         {
+            Debug.Log(collision.gameObject.name);
             for(int i = 0; i < collision.gameObject.transform.childCount; i++)
             {
                 points.Add(collision.gameObject.transform.GetChild(i));
