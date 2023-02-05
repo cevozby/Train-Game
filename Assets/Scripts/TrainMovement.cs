@@ -32,11 +32,11 @@ public class TrainMovement : MonoBehaviour
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, points[index].position, speed);
-
-            //Vector3 vectorToTarget = points[index].position - transform.position;
-            //float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - rotationModifier;
-            //Quaternion toRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotateSpeed);
+            //LookAt(points[index].position);
+            Vector3 vectorToTarget = points[index].position - transform.position;
+            float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - rotationModifier;
+            Quaternion toRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotateSpeed);
             //Quaternion toRotation = Quaternion.LookRotation(transform.forward, points[index].position);
             //transform.rotation = Quaternion.Lerp(transform.rotation, toRotation,  Time.deltaTime);
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotateSpeed);
@@ -48,6 +48,17 @@ public class TrainMovement : MonoBehaviour
         }
         //trainRB.MovePosition(Vector2.Lerp(transform.position, point.position, speed + Time.deltaTime));
         //trainRB.AddForceAtPosition(Vector2.one * speed, point.position);
+    }
+
+    void LookAt(Vector3 target)
+    {
+        Quaternion lookRotation = Quaternion.LookRotation(target - transform.position);
+        float time = 0;
+        while (time < 1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, time);
+            time += Time.deltaTime * rotateSpeed;
+        }
     }
 
 
