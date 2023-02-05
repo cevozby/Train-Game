@@ -8,6 +8,8 @@ public class SwitchManager : MonoBehaviour
     int index;
 
     bool isBusy;
+
+    Touch touch;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,14 +24,14 @@ public class SwitchManager : MonoBehaviour
 
     void ChangeRoad()
     {
-        if (Input.GetMouseButtonDown(0) && !isBusy)
+        if ((Input.GetMouseButtonDown(0) || Input.touchCount > 0) && !isBusy)
         {
-            Debug.Log("Týkladýn");
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            touch = Input.GetTouch(0);
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); For pc
+            Ray ray = Camera.main.ScreenPointToRay(touch.position);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-            if(hit.collider != null && hit.collider.gameObject.CompareTag("SwitchRoad") && hit.collider.gameObject == this.gameObject)
+            if(touch.phase == TouchPhase.Began && hit.collider != null && hit.collider.gameObject.CompareTag("SwitchRoad") && hit.collider.gameObject == this.gameObject)
             {
-                Debug.Log("Ray vurdu");
                 if (index < railRoads.Count - 1) index++;
                 else index = 0;
                 if(index!= 0)

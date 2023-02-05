@@ -33,7 +33,7 @@ public class SpawnManager : MonoBehaviour
     {
         
         if (GameController.isPlayable) SpawnTrain();
-        else Destroy(this);
+        //else Destroy(this);
     }
 
     void SpawnTrain()
@@ -46,6 +46,7 @@ public class SpawnManager : MonoBehaviour
             GameObject tempTrain = trains[0];
             trains.RemoveAt(0);
             trains.Add(tempTrain);
+            GameController.trainCount++;
             //Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform).
             //    GetComponent<SpriteRenderer>().color = colorManager.ChangeTrainColor();
             StartCoroutine(Cooldown());

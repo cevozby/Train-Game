@@ -85,10 +85,8 @@ public class TrainMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Railroad"))
         {
-            Debug.Log("Train: " + transform.position);
             for(int i = 0; i < collision.gameObject.transform.childCount; i++)
             {
-                Debug.Log(Vector2.Distance(transform.position, collision.gameObject.transform.GetChild(i).position));
                 if(Vector2.Distance(transform.position, collision.gameObject.transform.GetChild(i).position) > 0.5f) 
                     points.Add(collision.gameObject.transform.GetChild(i).position);
             }
