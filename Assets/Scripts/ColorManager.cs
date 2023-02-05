@@ -5,7 +5,9 @@ using UnityEngine;
 public class ColorManager : MonoBehaviour
 {
     List<Color> colors = new List<Color> { Color.red, Color.green, 
-        Color.blue, Color.yellow, Color.grey, Color.magenta };
+        Color.blue, Color.yellow, Color.black, Color.magenta,
+        Color.white, Color.cyan, new Color(1, 0.5f, 0, 1), new Color(1, 0, 0.5f, 1)
+    };
 
     List<Color> currentColor = new List<Color>();
 
@@ -28,7 +30,6 @@ public class ColorManager : MonoBehaviour
         for (int i = 0; i < colorCount; i++)
         {
             int index = Random.Range(0, tempColor.Count);
-            Debug.Log("Index: " + index + " color: " + tempColor[index]);
             currentColor.Add(tempColor[index]);
             tempColor.RemoveAt(index);
         }

@@ -6,8 +6,8 @@ public class TrainMovement : MonoBehaviour
 {
     Rigidbody2D trainRB;
 
-    [SerializeField] Transform startPoint;
-    public List<Transform> points;
+    [SerializeField] Vector3 startPoint;
+    public List<Vector3> points;
     [SerializeField] float speed, rotateSpeed, rotationModifier;
     int index;
 
@@ -18,7 +18,8 @@ public class TrainMovement : MonoBehaviour
     {
         isStart = false;
         index = 0;
-        trainRB = GetComponent<Rigidbody2D>();
+        startPoint = GameObject.Find("StartPoint").GetComponent<Transform>().position;
+        //trainRB = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -26,21 +27,21 @@ public class TrainMovement : MonoBehaviour
     {
         if(points.Count == 0)
         {
-            transform.position = Vector2.MoveTowards(transform.position, startPoint.position, speed);
-            if (Vector2.Distance(transform.position, startPoint.position) <= 0.05f) isStart = true;
+            transform.position = Vector2.MoveTowards(transform.position, startPoint, speed);
+            if (Vector2.Distance(transform.position, startPoint) <= 0.05f) isStart = true;
         }
         else
         {
-            transform.position = Vector2.MoveTowards(transform.position, points[index].position, speed);
+            transform.position = Vector2.MoveTowards(transform.position, points[index], speed);
             //LookAt(points[index].position);
-            Vector3 vectorToTarget = points[index].position - transform.position;
+            Vector3 vectorToTarget = points[index] - transform.position;
             float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - rotationModifier;
             Quaternion toRotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotateSpeed);
             //Quaternion toRotation = Quaternion.LookRotation(transform.forward, points[index].position);
             //transform.rotation = Quaternion.Lerp(transform.rotation, toRotation,  Time.deltaTime);
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotateSpeed);
-            if (Vector2.Distance(transform.position, points[index].position) <= 0.05f)
+            if (Vector2.Distance(transform.position, points[index]) <= 0.05f)
             {
                 if (index < points.Count - 1) index++;
                 else return;
@@ -67,10 +68,12 @@ public class TrainMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Railroad"))
         {
-            Debug.Log(collision.gameObject.name);
+            Debug.Log("Train: " + transform.position);
             for(int i = 0; i < collision.gameObject.transform.childCount; i++)
             {
-                points.Add(collision.gameObject.transform.GetChild(i));
+                Debug.Log(Vector2.Distance(transform.position, collision.gameObject.transform.GetChild(i).position));
+                if(Vector2.Distance(transform.position, collision.gameObject.transform.GetChild(i).position) > 0.5f) 
+                    points.Add(collision.gameObject.transform.GetChild(i).position);
             }
         }
     }

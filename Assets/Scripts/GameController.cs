@@ -32,7 +32,8 @@ public class GameController : MonoBehaviour
     {
         float min = Mathf.FloorToInt(timer / 60);
         float sec = Mathf.FloorToInt(timer % 60);
-
+        if (min <= 0) min = 0;
+        if (sec <= 0) sec = 0;
         timeText.text = "TIME " + min.ToString() + ":" + sec.ToString();
     }
 

@@ -27,8 +27,7 @@ public class SwitchManager : MonoBehaviour
             Debug.Log("Týkladýn");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-            if(hit.collider != null && (hit.collider.gameObject.CompareTag("SwitchRoad") ||
-                hit.collider.transform.parent.parent.gameObject.CompareTag("SwitchRoad")))
+            if(hit.collider != null && hit.collider.gameObject.CompareTag("SwitchRoad") && hit.collider.gameObject == this.gameObject)
             {
                 Debug.Log("Ray vurdu");
                 if (index < railRoads.Count - 1) index++;
