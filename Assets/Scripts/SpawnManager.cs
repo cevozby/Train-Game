@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] GameObject train;
+    //[SerializeField] GameObject train;
+    [SerializeField] List<GameObject> trains;
 
     bool isReady = true;
 
@@ -40,8 +41,13 @@ public class SpawnManager : MonoBehaviour
         if (isReady)
         {
             isReady = false;
-            Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform).
-                GetComponent<SpriteRenderer>().color = colorManager.ChangeTrainColor();
+            trains[0].SetActive(true);
+            trains[0].GetComponent<SpriteRenderer>().color = colorManager.ChangeTrainColor();
+            GameObject tempTrain = trains[0];
+            trains.RemoveAt(0);
+            trains.Add(tempTrain);
+            //Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform).
+            //    GetComponent<SpriteRenderer>().color = colorManager.ChangeTrainColor();
             StartCoroutine(Cooldown());
         }
     }

@@ -11,14 +11,23 @@ public class TrainMovement : MonoBehaviour
     [SerializeField] float speed, rotateSpeed, rotationModifier;
     int index;
 
-    public bool isStart;
+    Vector3 startPos;
+
+    //public bool isStart;
+
+    private void OnEnable()
+    {
+        index = 0;
+        startPoint = GameObject.Find("StartPoint").GetComponent<Transform>().position;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        isStart = false;
-        index = 0;
-        startPoint = GameObject.Find("StartPoint").GetComponent<Transform>().position;
+        startPos = transform.position;
+        //isStart = false;
+        //index = 0;
+        //startPoint = GameObject.Find("StartPoint").GetComponent<Transform>().position;
         //trainRB = GetComponent<Rigidbody2D>();
     }
 
@@ -28,7 +37,7 @@ public class TrainMovement : MonoBehaviour
         if(points.Count == 0)
         {
             transform.position = Vector2.MoveTowards(transform.position, startPoint, speed);
-            if (Vector2.Distance(transform.position, startPoint) <= 0.05f) isStart = true;
+            //if (Vector2.Distance(transform.position, startPoint) <= 0.05f) isStart = true;
         }
         else
         {
@@ -49,6 +58,14 @@ public class TrainMovement : MonoBehaviour
         }
         //trainRB.MovePosition(Vector2.Lerp(transform.position, point.position, speed + Time.deltaTime));
         //trainRB.AddForceAtPosition(Vector2.one * speed, point.position);
+    }
+
+    private void OnDisable()
+    {
+        points.Clear();
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        transform.position = startPos;
+        transform.rotation = Quaternion.identity;
     }
 
     void LookAt(Vector3 target)

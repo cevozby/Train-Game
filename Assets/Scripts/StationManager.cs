@@ -23,7 +23,8 @@ public class StationManager : MonoBehaviour
         {
             Color trainColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
             Color stationColor = this.gameObject.GetComponent<SpriteRenderer>().color;
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
             ScoreManager.totalMatch++;
             matchManager.MatchObjects(trainColor, stationColor);
         }
