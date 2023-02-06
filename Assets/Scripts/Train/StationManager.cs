@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StationManager : MonoBehaviour
@@ -8,15 +6,10 @@ public class StationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
+        matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();//Catching MatcManager script
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //When train enter the station, control matcing and set the train activeted
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Train"))

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
@@ -13,8 +11,8 @@ public class AudioManager : MonoBehaviour
 
     static AudioManager instance;
 
-    //Sahneler arasý geçiþte bu nesneyi yok etme
-    //Eðer ki bu nesneden baþka bir tane daha oluþtuysa oluþan nesneyi sil
+    //Dont destroy this object when switching between scenes
+    //If there is another one of this object, delete the resulting object.
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -33,7 +31,7 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         if (LevelManager.currentLevel == 0) StopAudio();
-        //Background/Environment adlý anahtarlar var mý kontrol et, eðer varsa slider deðerini anahtardaki deðere eþitle
+        //Check if there are keys named Background/Environment, if there is, set the slider value to the value in the key
         if (PlayerPrefs.HasKey("Background")) masterSlider.value = PlayerPrefs.GetFloat("Background");
         musicMixer.SetFloat("Background", masterSlider.value);
 
@@ -41,12 +39,7 @@ public class AudioManager : MonoBehaviour
         environmentMixer.SetFloat("Environment", environmentSlider.value);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    //Ses seviyelerini ayarla ve kaydet
+    //Set and save audio levels
     public void SetMasterVolume(float volume)
     {
         musicMixer.SetFloat("Background", volume);
@@ -58,7 +51,8 @@ public class AudioManager : MonoBehaviour
         environmentMixer.SetFloat("Environment", volume);
         PlayerPrefs.SetFloat("Environment", volume);
     }
-    //Ýçine gönderilen klibi oynat, hali hazýrda oynayan bir klip varsa onu kapat yenisini oynat
+
+    //Play the embedded clip, if there is an already playing clip, stop it, play the new one
     public void PlayAudio(AudioClip clip)
     {
         if (environmentAudio.isPlaying)
@@ -73,7 +67,7 @@ public class AudioManager : MonoBehaviour
             environmentAudio.PlayOneShot(clip);
         }
     }
-    //Eðer oynayan bir klip varsa onu durdur
+    //If there is a clip playing, stop it
     public void StopAudio()
     {
         if (environmentAudio.isPlaying)

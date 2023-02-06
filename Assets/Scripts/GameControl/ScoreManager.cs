@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -27,7 +25,7 @@ public class ScoreManager : MonoBehaviour
         correctText.text = "CORRECT" + "\t\t" + currentScore.ToString() + " of " + totalMatch.ToString();
         EndTexts();
     }
-
+    //Set ending text
     void EndTexts()
     {
         if (GameController.isEnd)
@@ -38,7 +36,7 @@ public class ScoreManager : MonoBehaviour
                 "\n" + currentScore.ToString() + " of " + totalMatch.ToString() + "\n" + LevelManager.currentLevel;
         }
     }
-
+    //Calculate score with coefficients
     void CalculateScore()
     {
         endScore = currentScore * LevelManager.currentLevel * coef;

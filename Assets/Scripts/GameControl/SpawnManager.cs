@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    //[SerializeField] GameObject train;
     [SerializeField] List<GameObject> trains;
 
     bool isReady = true;
@@ -20,7 +19,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         new GameObject(parentObjectName);
-        colorManager = GameObject.Find("ColorManager").GetComponent<ColorManager>();
+        colorManager = GameObject.Find("ColorManager").GetComponent<ColorManager>();//Catching ColorManager script
     }
 
     // Update is called once per frame
@@ -33,9 +32,10 @@ public class SpawnManager : MonoBehaviour
     {
         
         if (GameController.isPlayable) SpawnTrain();
-        //else Destroy(this);
     }
-
+    //If isReady is true, spawn train
+    //Remove first index from trains list and add last index
+    //Increase train count
     void SpawnTrain()
     {
         if (isReady)
@@ -47,12 +47,10 @@ public class SpawnManager : MonoBehaviour
             trains.RemoveAt(0);
             trains.Add(tempTrain);
             GameController.trainCount++;
-            //Instantiate(train, transform.position, Quaternion.identity, GameObject.Find(parentObjectName).transform).
-            //    GetComponent<SpriteRenderer>().color = colorManager.ChangeTrainColor();
             StartCoroutine(Cooldown());
         }
     }
-
+    //Cooldown for spawning train
     IEnumerator Cooldown()
     {
         yield return new WaitForSeconds(cooldownTimer);

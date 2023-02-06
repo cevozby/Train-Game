@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,17 +12,14 @@ public class SetLevel : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //Get level information
+        //If maxlevel bigger then total levels, set maxLevel
         if (PlayerPrefs.GetInt("MaxLevel") <= 0) PlayerPrefs.SetInt("MaxLevel", 1);
         if (PlayerPrefs.GetInt("MaxLevel") > levelsButton.Count) PlayerPrefs.SetInt("MaxLevel", levelsButton.Count);
         SetUnlockedLevel();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    //Unlock buttons by MaxLevel
     void SetUnlockedLevel()
     {
         for (int i = 0; i < PlayerPrefs.GetInt("MaxLevel"); i++)
@@ -32,7 +28,7 @@ public class SetLevel : MonoBehaviour
             levelsImage[i].color = new Color(255, 255, 255, 1);
         }
     }
-
+    //Open level which clicked button
     public void OpenLevel()
     {
         string levelName = EventSystem.current.currentSelectedGameObject.name;
